@@ -1,0 +1,33 @@
+name: Run Test
+run-name: application test
+on: 
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+env:
+  NODE_VERSION: 22
+  PNPM_VERSION: 10
+  
+jobs:
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    continue-on-error: false
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ./.github/actions/setup-node-pnpm
+        with:
+          node-version: ${{env.NODE_VERSION}}
+          pnpm-version: ${{env.PNPM_VERSION}}
+      - name: Run Vitest
+        run: | 
+            pnpm vitest run \
+            --reporter=json \
+            --outputFile=vitest-report/unit.json || true
+      - name: Annotate PR if tests failed
+        if: always()
+        run: |
+          if jq -e '.numFailedTests > 0' vitest-report/unit.json > /dev/null; then
+            echo "::warning title=Unit Tests Failed::Some unit tests failed. See artifacts."
+          fi
