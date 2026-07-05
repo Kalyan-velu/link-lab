@@ -9,15 +9,16 @@ import {generators} from '~/generators'
     description="Every generator shares the same field model, so switching platforms never loses your input."
   >
     <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5">
-      <div
+      <NuxtLink
         v-for="generator in generators"
         :key="generator.id"
-        class="flex flex-col items-center gap-2 rounded-lg border border-border bg-surface p-4 text-center"
+        :to="`/generators/${generator.id}`"
+        class="flex flex-col items-center gap-2 rounded-lg border border-border bg-surface p-4 text-center transition-colors hover:border-primary/50"
       >
         <UIcon :name="generator.icon" class="size-6 text-primary" />
         <p class="text-sm font-medium text-text-primary">{{ generator.name }}</p>
         <p class="text-xs text-text-secondary">{{ generator.description }}</p>
-      </div>
+      </NuxtLink>
     </div>
   </AppSection>
 </template>

@@ -1,7 +1,8 @@
-import { describe, expect, it } from 'vitest'
-import { mountSuspended } from '@nuxt/test-utils/runtime'
+// @vitest-environment nuxt
+import {describe, expect, it} from 'vitest'
+import {mountSuspended} from '@nuxt/test-utils/runtime'
 import GeneratorForm from '~/components/generator-form.vue'
-import { whatsapp } from '~/generators/whatsapp'
+import {whatsapp} from '~/generators/whatsapp'
 
 describe('GeneratorForm', () => {
   it('renders one input per field on the generator', async () => {

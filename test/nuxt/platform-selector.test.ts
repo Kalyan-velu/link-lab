@@ -4,25 +4,23 @@ import PlatformSelector from '~/components/platform-selector.vue'
 import { generators } from '~/generators'
 
 describe('PlatformSelector', () => {
-  it('renders one option per generator', async () => {
-    const component = await mountSuspended(PlatformSelector, { props: { modelValue: 'whatsapp' } })
-    const buttons = component.findAll('[role="radio"]')
-    expect(buttons.length).toBe(generators.length)
+  it('renders one link per generator', async () => {
+    const component = await mountSuspended(PlatformSelector, { props: { currentId: 'whatsapp' } })
+    const links = component.findAll('a')
+    expect(links.length).toBe(generators.length)
   })
 
-  it('marks the selected generator as checked', async () => {
-    const component = await mountSuspended(PlatformSelector, { props: { modelValue: 'telegram' } })
-    const checked = component.findAll('[role="radio"][aria-checked="true"]')
-    expect(checked.length).toBe(1)
-    expect(checked[0]?.text()).toContain('Telegram')
+  it('links each generator to its own page', async () => {
+    const component = await mountSuspended(PlatformSelector, { props: { currentId: 'whatsapp' } })
+    const links = component.findAll('a')
+    const smsLink = links.find((l) => l.text().includes('SMS'))
+    expect(smsLink?.attributes('href')).toBe('/generators/sms')
   })
 
-  it('emits update:modelValue when a platform is clicked', async () => {
-    const component = await mountSuspended(PlatformSelector, { props: { modelValue: 'whatsapp' } })
-    const buttons = component.findAll('[role="radio"]')
-    const smsButton = buttons.find((b) => b.text().includes('SMS'))
-    await smsButton?.trigger('click')
-
-    expect(component.emitted('update:modelValue')?.[0]).toEqual(['sms'])
+  it('marks the current generator with aria-current', async () => {
+    const component = await mountSuspended(PlatformSelector, { props: { currentId: 'telegram' } })
+    const current = component.findAll('a[aria-current="page"]')
+    expect(current.length).toBe(1)
+    expect(current[0]?.text()).toContain('Telegram')
   })
 })

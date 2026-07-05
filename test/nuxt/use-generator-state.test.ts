@@ -1,22 +1,15 @@
-import { describe, expect, it, beforeEach } from 'vitest'
-import { useGeneratorState } from '../../app/composables/use-generator-state'
+import {describe, expect, it} from 'vitest'
+import {useGeneratorState} from '../../app/composables/use-generator-state'
 
 describe('useGeneratorState', () => {
-  beforeEach(() => {
-    localStorage.clear()
-  })
-
   it('defaults to the first generator', () => {
     const { selectedId } = useGeneratorState()
     expect(selectedId.value).toBe('whatsapp')
   })
 
-  it('persists the selected generator across instances', () => {
-    const a = useGeneratorState()
-    a.selectGenerator('telegram')
-
-    const b = useGeneratorState()
-    expect(b.selectedId.value).toBe('telegram')
+  it('accepts an initial generator id', () => {
+    const { selectedId } = useGeneratorState('telegram')
+    expect(selectedId.value).toBe('telegram')
   })
 
   it('preserves shared field values when switching generators (WhatsApp -> Telegram keeps phone and message)', () => {
@@ -31,12 +24,12 @@ describe('useGeneratorState', () => {
     expect(state.values.message).toBe('Hello')
   })
 
-  it('persists field values across instances', () => {
+  it('does not share field values between separate instances', () => {
     const a = useGeneratorState()
     a.setValue('email', 'a@b.com')
 
     const b = useGeneratorState()
-    expect(b.values.email).toBe('a@b.com')
+    expect(b.values.email).toBeUndefined()
   })
 
   it('resetCurrent clears only content fields used by the current generator, keeping global fields', () => {

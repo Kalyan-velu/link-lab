@@ -4,8 +4,9 @@ import CopyButton from '~/components/copy-button.vue'
 
 describe('CopyButton', () => {
   beforeEach(() => {
-    Object.assign(navigator, {
-      clipboard: { writeText: vi.fn().mockResolvedValue(undefined) },
+    Object.defineProperty(navigator, 'clipboard', {
+      configurable: true,
+      value: { writeText: vi.fn().mockResolvedValue(undefined) },
     })
   })
 
