@@ -209,7 +209,6 @@ const activeItem = computed(() => {
   return bestItem;
 });
 const activeGeneratorId = computed(() => activeItem.value?.generator.id);
-// Animate rotational easing loop
 function animationLoop() {
   // If auto-rotating and not interacting, drift slowly
   if (autoRotateActive.value && !isDragging.value) {
@@ -401,7 +400,7 @@ onUnmounted(() => {
               :class="[
               brandStyles[item.generator.id]?.bg,
               brandStyles[item.generator.id]?.shadow,
-              item.generator.id === activeGeneratorId.value
+              item.generator.id === activeGeneratorId
                 ? 'ring-4 ring-offset-2 ring-primary scale-110'
                 : '',
             ]"
@@ -416,7 +415,7 @@ onUnmounted(() => {
           <span
               class="rounded-full bg-white/95 px-2 py-0.5 text-[10px] font-semibold text-text-secondary border border-border shadow-xs transition-opacity"
               :class="
-              item.generator.id === activeGeneratorId.value
+              item.generator.id === activeGeneratorId
                 ? 'text-primary border-primary/30 font-bold bg-white'
                 : ''
             "
@@ -429,7 +428,7 @@ onUnmounted(() => {
 
     <Transition name="fade-up" mode="out-in">
       <div
-          :key="activeGeneratorId.value"
+          :key="activeGeneratorId"
           class="mt-4 flex max-w-sm flex-col items-center text-center px-4"
       >
         <span
@@ -454,11 +453,11 @@ onUnmounted(() => {
 
         <!-- Dynamic Action Button -->
         <NuxtLink
-            :to="`/generators/${activeGeneratorId.value}`"
+            :to="`/generators/${activeGeneratorId}`"
             class="mt-6 flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-medium text-white shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95"
             :class="[
-            brandStyles[activeGeneratorId.value]?.bg,
-            brandStyles[activeGeneratorId.value]?.shadow,
+            brandStyles[activeGeneratorId]?.bg,
+            brandStyles[activeGeneratorId]?.shadow,
           ]"
         >
           Create {{ activeItem.generator.name }} Link

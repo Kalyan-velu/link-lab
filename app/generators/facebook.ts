@@ -1,10 +1,10 @@
-import type { GeneratorConfig } from '~/types/generator'
+import type {GeneratorConfig} from '~/types/generator'
 
 export const facebook: GeneratorConfig = {
   id: 'facebook',
   name: 'Messenger',
   description: 'Start a chat on Facebook Messenger, with an optional pre-filled message.',
-  icon: 'simple-icons:facebookmessenger',
+  icon: 'simple-icons:facebook',
   fields: [
     { key: 'username', required: true, label: 'Facebook Username' },
     { key: 'message', required: false, label: 'Pre-filled message (optional)' }

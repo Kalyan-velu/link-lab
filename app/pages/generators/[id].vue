@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { getGenerator } from '~/generators'
+import {computed} from 'vue'
+import {getGenerator} from '~/generators'
 
 definePageMeta({
   validate: (route) => Boolean(getGenerator(String(route.params.id))),
@@ -55,21 +55,18 @@ useHead(() => ({
 </script>
 
 <template>
-  <!-- Main layout frame. On desktop, sets height to fill screen and locks window scroll -->
-  <div 
+  <div
     class="relative overflow-hidden min-h-screen pb-28 lg:pb-0 lg:h-[calc(100vh-73px)] lg:min-h-0 lg:overflow-hidden"
     :style="{ 
       '--color-primary': currentBrand.main, 
       '--color-primary-hover': currentBrand.hover 
     }"
   >
-    <!-- Background Aura Glow -->
     <div 
       class="absolute top-0 left-1/2 -z-10 h-[500px] w-full max-w-7xl -translate-x-1/2 opacity-[0.07] blur-[120px] pointer-events-none rounded-full transition-all duration-700"
       :class="currentBrand.bg"
     />
 
-    <!-- Main Section Arena -->
     <div class="mx-auto max-w-5xl h-full px-4 sm:px-6 lg:px-8 pt-4 lg:pt-6">
       <GeneratorSection :generator-id="id" />
     </div>
