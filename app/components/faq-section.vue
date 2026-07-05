@@ -2,11 +2,11 @@
 const faqs = [
   {
     question: 'Is anything I type sent to a server?',
-    answer: 'No. Every link is generated entirely in your browser, and your inputs are only ever stored in your own browser\'s local storage.',
+    answer: 'No. Every link is generated entirely in your browser. Nothing is stored — not on a server, not even in local storage — so it disappears as soon as you leave the page.',
   },
   {
     question: 'Why do some fields carry over when I switch platforms?',
-    answer: 'Fields like phone number or username are shared across generators that use them, so you don\'t have to retype the same information twice.',
+    answer: 'Fields like phone number or username are shared across generators that use them for the current session, so you don\'t have to retype the same information twice.',
   },
   {
     question: 'What does Reset clear?',

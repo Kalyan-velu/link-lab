@@ -7,18 +7,74 @@
  * these variables into utility classes (bg-surface, text-muted, etc).
  */
 :root {
+  /* Custom palette colors */
+  --color-imperial-blue-100: #000815;
+  --color-imperial-blue-200: #00102b;
+  --color-imperial-blue-300: #001940;
+  --color-imperial-blue-400: #002156;
+  --color-imperial-blue-500: #00296b;
+  --color-imperial-blue-600: #0048bc;
+  --color-imperial-blue-700: #0d6aff;
+  --color-imperial-blue-800: #5e9cff;
+  --color-imperial-blue-900: #aecdff;
+  --color-imperial-blue: var(--color-imperial-blue-500);
+
+  --color-french-blue-100: #000d1c;
+  --color-french-blue-200: #001a37;
+  --color-french-blue-300: #002753;
+  --color-french-blue-400: #00336e;
+  --color-french-blue-500: #003f88;
+  --color-french-blue-600: #0063d4;
+  --color-french-blue-700: #2088ff;
+  --color-french-blue-800: #6ab0ff;
+  --color-french-blue-900: #b5d7ff;
+  --color-french-blue: var(--color-french-blue-500);
+
+  --color-steel-azure-100: #001020;
+  --color-steel-azure-200: #00213f;
+  --color-steel-azure-300: #00315f;
+  --color-steel-azure-400: #00417e;
+  --color-steel-azure-500: #00509d;
+  --color-steel-azure-600: #0076e4;
+  --color-steel-azure-700: #2c99ff;
+  --color-steel-azure-800: #72bbff;
+  --color-steel-azure-900: #b9ddff;
+  --color-steel-azure: var(--color-steel-azure-500);
+
+  --color-school-bus-yellow-100: #332800;
+  --color-school-bus-yellow-200: #665000;
+  --color-school-bus-yellow-300: #997800;
+  --color-school-bus-yellow-400: #cca000;
+  --color-school-bus-yellow-500: #fdc500;
+  --color-school-bus-yellow-600: #ffd333;
+  --color-school-bus-yellow-700: #ffde66;
+  --color-school-bus-yellow-800: #ffe999;
+  --color-school-bus-yellow-900: #fff4cc;
+  --color-school-bus-yellow: var(--color-school-bus-yellow-500);
+
+  --color-gold-100: #332b00;
+  --color-gold-200: #665500;
+  --color-gold-300: #998000;
+  --color-gold-400: #ccaa00;
+  --color-gold-500: #ffd500;
+  --color-gold-600: #ffdd33;
+  --color-gold-700: #ffe666;
+  --color-gold-800: #ffee99;
+  --color-gold-900: #fff6cc;
+  --color-gold: var(--color-gold-500);
+
   /* Colors — light theme */
   --color-background: #ffffff;
-  --color-surface: #f7f7f8;
+  --color-surface: #f0f4f8;
   --color-surface-elevated: #ffffff;
-  --color-border: #e4e4e7;
+  --color-border: #dbeafe;
 
-  --color-primary: #4f46e5;
-  --color-primary-hover: #4338ca;
-  --color-secondary: #0ea5e9;
+  --color-primary: var(--color-french-blue-500);
+  --color-primary-hover: var(--color-french-blue-600);
+  --color-secondary: var(--color-steel-azure-500);
 
   --color-success: #16a34a;
-  --color-warning: #d97706;
+  --color-warning: var(--color-gold-500);
   --color-error: #dc2626;
 
   --color-text-primary: #18181b;
@@ -27,6 +83,7 @@
 
   /* Typography */
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: "Outfit", "Space Grotesk", "Plus Jakarta Sans", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --text-xs: 0.75rem;
@@ -99,45 +156,6 @@
   --breakpoint-xl: 1280px;
 }
 
-:root[data-theme="dark"] {
-  --color-background: #0a0a0b;
-  --color-surface: #17171a;
-  --color-surface-elevated: #1f1f23;
-  --color-border: #2b2b30;
-
-  --color-primary: #6366f1;
-  --color-primary-hover: #818cf8;
-  --color-secondary: #38bdf8;
-
-  --color-success: #22c55e;
-  --color-warning: #f59e0b;
-  --color-error: #ef4444;
-
-  --color-text-primary: #fafafa;
-  --color-text-secondary: #a1a1aa;
-  --color-muted: #71717a;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --color-background: #0a0a0b;
-    --color-surface: #17171a;
-    --color-surface-elevated: #1f1f23;
-    --color-border: #2b2b30;
-
-    --color-primary: #6366f1;
-    --color-primary-hover: #818cf8;
-    --color-secondary: #38bdf8;
-
-    --color-success: #22c55e;
-    --color-warning: #f59e0b;
-    --color-error: #ef4444;
-
-    --color-text-primary: #fafafa;
-    --color-text-secondary: #a1a1aa;
-    --color-muted: #71717a;
-  }
-}
 
 @theme inline {
   --color-background: var(--color-background);
@@ -154,7 +172,63 @@
   --color-text-secondary: var(--color-text-secondary);
   --color-muted: var(--color-muted);
 
+  --color-imperial-blue: var(--color-imperial-blue);
+  --color-imperial-blue-100: var(--color-imperial-blue-100);
+  --color-imperial-blue-200: var(--color-imperial-blue-200);
+  --color-imperial-blue-300: var(--color-imperial-blue-300);
+  --color-imperial-blue-400: var(--color-imperial-blue-400);
+  --color-imperial-blue-500: var(--color-imperial-blue-500);
+  --color-imperial-blue-600: var(--color-imperial-blue-600);
+  --color-imperial-blue-700: var(--color-imperial-blue-700);
+  --color-imperial-blue-800: var(--color-imperial-blue-800);
+  --color-imperial-blue-900: var(--color-imperial-blue-900);
+
+  --color-french-blue: var(--color-french-blue);
+  --color-french-blue-100: var(--color-french-blue-100);
+  --color-french-blue-200: var(--color-french-blue-200);
+  --color-french-blue-300: var(--color-french-blue-300);
+  --color-french-blue-400: var(--color-french-blue-400);
+  --color-french-blue-500: var(--color-french-blue-500);
+  --color-french-blue-600: var(--color-french-blue-600);
+  --color-french-blue-700: var(--color-french-blue-700);
+  --color-french-blue-800: var(--color-french-blue-800);
+  --color-french-blue-900: var(--color-french-blue-900);
+
+  --color-steel-azure: var(--color-steel-azure);
+  --color-steel-azure-100: var(--color-steel-azure-100);
+  --color-steel-azure-200: var(--color-steel-azure-200);
+  --color-steel-azure-300: var(--color-steel-azure-300);
+  --color-steel-azure-400: var(--color-steel-azure-400);
+  --color-steel-azure-500: var(--color-steel-azure-500);
+  --color-steel-azure-600: var(--color-steel-azure-600);
+  --color-steel-azure-700: var(--color-steel-azure-700);
+  --color-steel-azure-800: var(--color-steel-azure-800);
+  --color-steel-azure-900: var(--color-steel-azure-900);
+
+  --color-school-bus-yellow: var(--color-school-bus-yellow);
+  --color-school-bus-yellow-100: var(--color-school-bus-yellow-100);
+  --color-school-bus-yellow-200: var(--color-school-bus-yellow-200);
+  --color-school-bus-yellow-300: var(--color-school-bus-yellow-300);
+  --color-school-bus-yellow-400: var(--color-school-bus-yellow-400);
+  --color-school-bus-yellow-500: var(--color-school-bus-yellow-500);
+  --color-school-bus-yellow-600: var(--color-school-bus-yellow-600);
+  --color-school-bus-yellow-700: var(--color-school-bus-yellow-700);
+  --color-school-bus-yellow-800: var(--color-school-bus-yellow-800);
+  --color-school-bus-yellow-900: var(--color-school-bus-yellow-900);
+
+  --color-gold: var(--color-gold);
+  --color-gold-100: var(--color-gold-100);
+  --color-gold-200: var(--color-gold-200);
+  --color-gold-300: var(--color-gold-300);
+  --color-gold-400: var(--color-gold-400);
+  --color-gold-500: var(--color-gold-500);
+  --color-gold-600: var(--color-gold-600);
+  --color-gold-700: var(--color-gold-700);
+  --color-gold-800: var(--color-gold-800);
+  --color-gold-900: var(--color-gold-900);
+
   --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
   --font-mono: var(--font-mono);
 
   --radius-xs: var(--radius-xs);
@@ -179,4 +253,8 @@ body {
   color: var(--color-text-primary);
   font-family: var(--font-sans), monospace;
   line-height: var(--leading-normal);
+}
+
+h1, h2, h3, h4, h5, h6, .font-display {
+  font-family: var(--font-display), var(--font-sans), sans-serif;
 }
