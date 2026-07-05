@@ -4,7 +4,7 @@ export const facebook: GeneratorConfig = {
   id: 'facebook',
   name: 'Messenger',
   description: 'Start a chat on Facebook Messenger, with an optional pre-filled message.',
-  icon: 'simple-icons:facebook',
+  icon: 'simple-icons:messenger',
   fields: [
     { key: 'username', required: true, label: 'Facebook Username' },
     { key: 'message', required: false, label: 'Pre-filled message (optional)' }
