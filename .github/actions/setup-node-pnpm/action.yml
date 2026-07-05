@@ -1,0 +1,27 @@
+name: Setup Node + pnpm
+description: Set up Node.js, pnpm, and install deps (assumes the repo is already checked out)
+
+inputs:
+  node-version:
+    required: false
+    default: "22"
+    description: Node Version 22
+  pnpm-version:
+    required: false
+    default: "10"
+    description: Pnpm Version 10
+
+runs:
+  using: composite
+  steps:
+    - uses: pnpm/action-setup@v6
+      with:
+        version: ${{ inputs.pnpm-version }}
+
+    - uses: actions/setup-node@v6
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: pnpm
+
+    - run: pnpm install --frozen-lockfile
+      shell: bash
