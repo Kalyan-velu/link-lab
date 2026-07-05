@@ -105,7 +105,7 @@ const faqs = computed(() => [
   <div v-if="generator" class="grid gap-6 lg:grid-cols-12 lg:h-[calc(100vh-100px)] lg:overflow-hidden lg:gap-8">
     
     <!-- Left Column (Breadcrumbs, Header, Tabs, Form, Results, Specs, FAQs) -> Scrolls independently -->
-    <div class="flex flex-col gap-6 lg:col-span-8 lg:h-full lg:overflow-y-auto no-scrollbar pb-10 lg:pb-16 lg:pr-4">
+    <div class="flex flex-col gap-6 lg:col-span-8 lg:h-full lg:overflow-y-auto pb-10 lg:pb-16 lg:pr-4">
       <!-- Breadcrumbs -->
       <nav aria-label="Breadcrumb" class="text-xs text-text-secondary select-none">
         <ol class="flex items-center gap-2">
@@ -282,7 +282,7 @@ const faqs = computed(() => [
     </div>
 
     <!-- Right Column / Mobile Floating Bar: Selector for Platforms -> Scrolls independently on Desktop -->
-    <div class="fixed bottom-4 left-4 right-4 z-40 bg-white/90 backdrop-blur-md rounded-2xl rounded-t-0 border border-border/70 p-2.5 shadow-2xl lg:static lg:bg-transparent lg:border-none lg:shadow-none lg:p-0 lg:z-auto lg:backdrop-blur-none lg:col-span-4 lg:h-full lg:overflow-y-auto lg:pr-1 no-scrollbar pb-2 lg:pb-16">
+    <div class="fixed bottom-4 left-4 right-4 z-40 bg-white/90 backdrop-blur-md rounded-2xl rounded-t-0 border border-border/70 p-2.5 shadow-2xl lg:static lg:bg-transparent lg:border-none lg:shadow-none lg:p-0 lg:z-auto lg:backdrop-blur-none lg:col-span-4 lg:h-full lg:overflow-y-auto lg:pr-1 pb-2 lg:pb-16">
       <!-- Sidebar header (visible only on desktop) -->
       <div class="hidden lg:block mb-4 border-b border-border/20 pb-3">
         <h3 class="text-xs font-bold pl-2 uppercase tracking-wider text-text-secondary flex items-center gap-1.5 font-display">
@@ -296,14 +296,3 @@ const faqs = computed(() => [
 
   </div>
 </template>
-
-<style scoped>
-/* Utility to hide native scrollbar but allow vertical scrolling */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-</style>

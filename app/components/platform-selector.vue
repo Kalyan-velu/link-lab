@@ -6,9 +6,9 @@ defineProps<{ currentId: string }>()
 
 <template>
   <!-- Responsive navigation: Horizontal scroll bar on mobile, vertical stack list on desktop -->
-  <nav 
-    aria-label="Select a platform" 
-    class="flex flex-row overflow-x-auto gap-2 p-1 w-full no-scrollbar scroll-smooth lg:flex-col lg:overflow-x-visible lg:gap-2"
+  <nav
+    aria-label="Select a platform"
+    class="flex flex-row overflow-x-auto gap-2 p-1 w-full scroll-smooth lg:flex-col lg:overflow-x-visible lg:gap-2"
   >
     <NuxtLink
       v-for="generator in generators"
@@ -25,14 +25,3 @@ defineProps<{ currentId: string }>()
     </NuxtLink>
   </nav>
 </template>
-
-<style scoped>
-/* Utility to hide native scrollbar but allow horizontal scrolling */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-</style>
