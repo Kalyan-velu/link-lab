@@ -71,13 +71,6 @@ const brandStyles: Record<
     shadow: "shadow-[#FFFC00]/30",
     glow: "from-[#FFFC00]/20 to-transparent",
   },
-  skype: {
-    bg: "bg-[#00AFF0]",
-    text: "text-white",
-    border: "border-[#00AFF0]",
-    shadow: "shadow-[#00AFF0]/30",
-    glow: "from-[#00AFF0]/20 to-transparent",
-  },
   linkedin: {
     bg: "bg-[#0A66C2]",
     text: "text-white",

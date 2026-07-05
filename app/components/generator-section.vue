@@ -1,25 +1,67 @@
 <script setup lang="ts">
-import {computed, watch} from 'vue'
+import {computed, ref, watch} from 'vue'
 import {useGeneratorState} from '~/composables/use-generator-state'
 import {getGenerator} from '~/generators'
 import {tryGenerate, validateGenerator} from '~/utils/generator-engine'
 import type {FieldKey} from '~/types/field'
+import type {LinkType} from '~/types/generator'
 
 const props = defineProps<{ generatorId: string }>()
 
 const { selectedId, values, selectGenerator, setValue, resetCurrent } = useGeneratorState(props.generatorId)
 
-watch(() => props.generatorId, (id) => selectGenerator(id))
+const activeType = ref<LinkType>('dm')
+
+// Reset active link type contextually based on the selected platform
+watch(selectedId, (id) => {
+  selectGenerator(id)
+  
+  const gen = getGenerator(id)
+  if (!gen) return
+
+  if (id === 'x') {
+    activeType.value = 'post'
+  } else if (id === 'linkedin' || id === 'google-maps') {
+    activeType.value = 'profile'
+  } else if (gen.supportedTypes && gen.supportedTypes.includes('dm')) {
+    activeType.value = 'dm'
+  } else {
+    activeType.value = gen.supportedTypes?.[0] || 'dm'
+  }
+}, { immediate: true })
 
 const generator = computed(() => getGenerator(selectedId.value))
 
+// Determine dynamic fields active for the current link type tab
+const activeFields = computed(() => {
+  if (generator.value?.typeFields && activeType.value) {
+    return generator.value.typeFields[activeType.value] || generator.value.fields
+  }
+  return generator.value?.fields || []
+})
+
 const hasAnyValue = computed(() =>
-  generator.value ? generator.value.fields.some((fieldRef) => Boolean(values[fieldRef.key]?.trim())) : false,
+  generator.value ? activeFields.value.some((fieldRef) => Boolean(values[fieldRef.key]?.trim())) : false,
 )
 
-const errors = computed(() => (generator.value && hasAnyValue.value ? validateGenerator(generator.value, values) : {}))
+const errors = computed(() => (generator.value && hasAnyValue.value ? validateGenerator(generator.value, values, activeType.value) : {}))
 
-const result = computed(() => (generator.value ? tryGenerate(generator.value, values) : { url: null, errors: {} }))
+const result = computed(() => (generator.value ? tryGenerate(generator.value, values, activeType.value) : { url: null, errors: {} }))
+
+// Technical specs dynamic templates & explanations
+const formatTemplate = computed(() => {
+  if (generator.value?.typeTemplates && activeType.value) {
+    return generator.value.typeTemplates[activeType.value] || generator.value.formatTemplate
+  }
+  return generator.value?.formatTemplate
+})
+
+const formatExplanation = computed(() => {
+  if (generator.value?.typeExplanations && activeType.value) {
+    return generator.value.typeExplanations[activeType.value] || generator.value.formatExplanation
+  }
+  return generator.value?.formatExplanation
+})
 
 function handleUpdateValue(key: string, value: string): void {
   setValue(key as FieldKey, value)
@@ -36,7 +78,6 @@ const brandColorMap: Record<string, { bg: string, text: string }> = {
   phone: { bg: 'bg-[#34C759]', text: 'text-[#34C759]' },
   email: { bg: 'bg-[#EA4335]', text: 'text-[#EA4335]' },
   snapchat: { bg: 'bg-[#FFFC00]', text: 'text-neutral-800' },
-  skype: { bg: 'bg-[#00AFF0]', text: 'text-[#00AFF0]' },
   linkedin: { bg: 'bg-[#0A66C2]', text: 'text-[#0A66C2]' },
   x: { bg: 'bg-black', text: 'text-black' },
   'google-maps': { bg: 'bg-[#4285F4]', text: 'text-[#4285F4]' }
@@ -63,7 +104,9 @@ const faqs = computed(() => [
 <template>
   <div v-if="generator" class="grid gap-6 lg:grid-cols-12 lg:h-[calc(100vh-100px)] lg:overflow-hidden lg:gap-8">
     
+    <!-- Left Column (Breadcrumbs, Header, Tabs, Form, Results, Specs, FAQs) -> Scrolls independently -->
     <div class="flex flex-col gap-6 lg:col-span-8 lg:h-full lg:overflow-y-auto no-scrollbar pb-10 lg:pb-16 lg:pr-4">
+      <!-- Breadcrumbs -->
       <nav aria-label="Breadcrumb" class="text-xs text-text-secondary select-none">
         <ol class="flex items-center gap-2">
           <li>
@@ -80,6 +123,7 @@ const faqs = computed(() => [
         </ol>
       </nav>
 
+      <!-- Header Section -->
       <section class="flex flex-col items-center lg:items-start gap-4 pt-4 text-center lg:text-left">
         <span 
           class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-xs"
@@ -98,14 +142,35 @@ const faqs = computed(() => [
         </p>
       </section>
 
+      <!-- Card 1: Configuration Fields & Tabs -->
       <div class="rounded-2xl border border-border/50 bg-white p-5 sm:p-7 shadow-xs">
         <h3 class="text-sm font-bold uppercase tracking-wider text-primary mb-5 flex items-center gap-1.5 font-display border-b border-border/20 pb-3">
           <UIcon name="lucide:sliders" class="size-4" />
           Link Configuration
         </h3>
+
+        <!-- Dynamic Segmented Link Type Tabs -->
+        <div 
+          v-if="generator.supportedTypes && generator.supportedTypes.length > 1" 
+          class="flex gap-1.5 p-1 bg-surface border border-border/40 rounded-xl mb-6 shadow-xs select-none"
+        >
+          <button
+            v-for="type in generator.supportedTypes"
+            :key="type"
+            type="button"
+            class="flex-1 py-2 px-3 rounded-lg text-xs font-bold capitalize transition-all duration-200 cursor-pointer text-center outline-none border border-transparent"
+            :class="activeType === type
+              ? 'bg-white text-primary shadow-sm border-border/20 font-extrabold scale-[1.02]'
+              : 'text-text-secondary hover:text-text-primary hover:bg-white/30'"
+            @click="activeType = type"
+          >
+            {{ type === 'dm' ? 'Direct DM' : type }}
+          </button>
+        </div>
         
         <GeneratorForm
           :generator="generator"
+          :fields="activeFields"
           :values="values"
           :errors="errors"
           @update:value="handleUpdateValue"
@@ -168,7 +233,7 @@ const faqs = computed(() => [
         />
       </div>
 
-      <div v-if="generator.formatTemplate" class="rounded-2xl border border-border/50 bg-white p-5 sm:p-7 shadow-xs">
+      <div v-if="formatTemplate" class="rounded-2xl border border-border/50 bg-white p-5 sm:p-7 shadow-xs">
         <h3 class="text-xs font-bold uppercase tracking-wider text-primary mb-2.5 flex items-center gap-1.5 font-display border-b border-border/20 pb-3">
           <UIcon name="lucide:settings" class="size-4" />
           Technical Specs
@@ -177,18 +242,20 @@ const faqs = computed(() => [
           Here is the direct deep link URL structure generated for this platform. Search engines and browsers use this format to route actions straight to the app:
         </p>
         
+        <!-- Code template block -->
         <div class="relative rounded-lg bg-surface border border-border/60 p-3 sm:p-4 mb-4 shadow-inner flex items-center justify-between gap-3 group">
           <code class="break-all font-mono text-[11px] font-bold text-text-primary">
-            {{ generator.formatTemplate }}
+            {{ formatTemplate }}
           </code>
-          <CopyButton :text="generator.formatTemplate" class="shrink-0 scale-90 rounded-full" size="sm" />
+          <CopyButton :text="formatTemplate" class="shrink-0 scale-90 rounded-full" size="sm" />
         </div>
         
         <p class="text-xs text-text-secondary leading-relaxed pl-3 border-l-2 border-primary/50">
-          {{ generator.formatExplanation }}
+          {{ formatExplanation }}
         </p>
       </div>
 
+      <!-- Card 4: Frequently Asked Questions -->
       <div class="rounded-2xl border border-border/50 bg-white p-5 sm:p-7 shadow-xs">
         <h3 class="text-sm font-bold uppercase tracking-wider text-primary mb-4 flex items-center gap-1.5 font-display border-b border-border/20 pb-3">
           <UIcon name="lucide:help-circle" class="size-4" />
@@ -214,9 +281,11 @@ const faqs = computed(() => [
 
     </div>
 
-    <div class="fixed bottom-4 left-4 right-4 z-40 bg-white/90 backdrop-blur-md rounded-2xl border border-border/70 p-2.5 shadow-2xl lg:static lg:bg-transparent lg:border-none lg:shadow-none lg:p-0 lg:z-auto lg:backdrop-blur-none lg:col-span-4 lg:h-full lg:overflow-y-auto lg:pr-1 no-scrollbar pb-2 lg:pb-16">
+    <!-- Right Column / Mobile Floating Bar: Selector for Platforms -> Scrolls independently on Desktop -->
+    <div class="fixed bottom-4 left-4 right-4 z-40 bg-white/90 backdrop-blur-md rounded-2xl rounded-t-0 border border-border/70 p-2.5 shadow-2xl lg:static lg:bg-transparent lg:border-none lg:shadow-none lg:p-0 lg:z-auto lg:backdrop-blur-none lg:col-span-4 lg:h-full lg:overflow-y-auto lg:pr-1 no-scrollbar pb-2 lg:pb-16">
+      <!-- Sidebar header (visible only on desktop) -->
       <div class="hidden lg:block mb-4 border-b border-border/20 pb-3">
-        <h3 class="text-xs font-bold uppercase tracking-wider text-text-secondary flex items-center gap-1.5 font-display">
+        <h3 class="text-xs font-bold pl-2 uppercase tracking-wider text-text-secondary flex items-center gap-1.5 font-display">
           <UIcon name="lucide:layers" class="size-3.5 text-primary" />
           Other Platforms
         </h3>

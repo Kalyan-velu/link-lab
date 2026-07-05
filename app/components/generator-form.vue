@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import type {FieldValues, GeneratorConfig, ValidationErrors} from '~/types/generator'
+import type {FieldValues, GeneratorConfig, ValidationErrors, GeneratorFieldRef} from '~/types/generator'
 import {getField} from '~/utils/fields'
 
 defineProps<{
   generator: GeneratorConfig
   values: FieldValues
   errors: ValidationErrors
+  fields?: GeneratorFieldRef[]
 }>()
 
 const emit = defineEmits<{ 'update:value': [key: string, value: string] }>()
@@ -18,7 +19,7 @@ function onInput(key: string, event: Event): void {
 
 <template>
   <form class="flex flex-col gap-5" @submit.prevent>
-    <div v-for="fieldRef in generator.fields" :key="fieldRef.key" class="flex flex-col gap-1.5">
+    <div v-for="fieldRef in (fields || generator.fields)" :key="fieldRef.key" class="flex flex-col gap-1.5">
       <label :for="`field-${fieldRef.key}`" class="text-sm font-medium text-text-primary">
         {{ fieldRef.label ?? getField(fieldRef.key).label }}
         <span v-if="fieldRef.required" aria-hidden="true" class="text-[var(--color-error)]">*</span>

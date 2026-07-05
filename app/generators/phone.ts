@@ -7,7 +7,7 @@ export const phone: GeneratorConfig = {
   description: 'Start a phone call directly.',
   icon: 'lucide:phone',
   fields: [{ key: 'phone', required: true }],
-  generate: (values) => {
+  generate: (values, type = 'dm') => {
     const value = normalizePhone(values.phone ?? '')
     return `tel:${value}`
   },

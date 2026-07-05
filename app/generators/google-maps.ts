@@ -10,7 +10,7 @@ export const googleMaps: GeneratorConfig = {
     { key: 'latitude', required: false },
     { key: 'longitude', required: false },
   ],
-  generate: (values) => {
+  generate: (values, type = 'profile') => {
     const lat = values.latitude?.trim()
     const lon = values.longitude?.trim()
     const address = values.address?.trim()

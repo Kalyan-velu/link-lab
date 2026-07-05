@@ -7,7 +7,7 @@ export const signal: GeneratorConfig = {
   description: 'Start a secure private conversation on Signal.',
   icon: 'simple-icons:signal',
   fields: [{ key: 'phone', required: true, label: 'Phone Number' }],
-  generate: (values) => {
+  generate: (values, type = 'dm') => {
     const phone = normalizePhone(values.phone ?? '').replace(/^\+/, '')
     return `https://signal.me/#p/+${phone}`
   },

@@ -13,7 +13,6 @@ LinkLab is a free deep link generator. Pick a platform, fill in a few fields, an
 - Phone call
 - Email
 - Snapchat
-- Skype
 - LinkedIn
 - X (Twitter)
 - Google Maps

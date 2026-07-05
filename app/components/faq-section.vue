@@ -4,18 +4,18 @@ const faqs = [
     question: 'Is anything I type sent to a server?',
     answer: 'No. Every link is generated entirely in your browser. Nothing is stored — not on a server, not even in local storage — so it disappears as soon as you leave the page.',
   },
-  {
-    question: 'Why do some fields carry over when I switch platforms?',
-    answer: 'Fields like phone number or username are shared across generators that use them for the current session, so you don\'t have to retype the same information twice.',
-  },
-  {
-    question: 'What does Reset clear?',
-    answer: 'Reset clears message-style content for the current platform (like a message or subject) but keeps identity fields such as phone number or username.',
-  },
-  {
-    question: 'Can I add more platforms?',
-    answer: 'Yes — the generator system is configuration-driven, so new platforms are added as a small config file rather than app changes.',
-  },
+  // {
+  //   question: 'Why do some fields carry over when I switch platforms?',
+  //   answer: 'Fields like phone number or username are shared across generators that use them for the current session, so you don\'t have to retype the same information twice.',
+  // },
+  // {
+  //   question: 'What does Reset clear?',
+  //   answer: 'Reset clears message-style content for the current platform (like a message or subject) but keeps identity fields such as phone number or username.',
+  // },
+  // {
+  //   question: 'Can I add more platforms?',
+  //   answer: 'Yes — the generator system is configuration-driven, so new platforms are added as a small config file rather than app changes.',
+  // },
 ]
 </script>
 

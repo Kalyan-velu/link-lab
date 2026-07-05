@@ -17,7 +17,6 @@ const brandStyles: Record<string, { bg: string, text: string, hoverText: string 
   phone: { bg: 'hover:bg-[#34C759]/10', text: 'text-[#34C759]', hoverText: 'group-hover:text-[#34C759]' },
   email: { bg: 'hover:bg-[#EA4335]/10', text: 'text-[#EA4335]', hoverText: 'group-hover:text-[#EA4335]' },
   snapchat: { bg: 'hover:bg-[#FFFC00]/10', text: 'text-neutral-800', hoverText: 'group-hover:text-[#FFFC00]' },
-  skype: { bg: 'hover:bg-[#00AFF0]/10', text: 'text-[#00AFF0]', hoverText: 'group-hover:text-[#00AFF0]' },
   linkedin: { bg: 'hover:bg-[#0A66C2]/10', text: 'text-[#0A66C2]', hoverText: 'group-hover:text-[#0A66C2]' },
   x: { bg: 'hover:bg-neutral-800/10', text: 'text-neutral-800', hoverText: 'group-hover:text-black' },
   'google-maps': { bg: 'hover:bg-[#4285F4]/10', text: 'text-[#4285F4]', hoverText: 'group-hover:text-[#4285F4]' }

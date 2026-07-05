@@ -10,7 +10,7 @@ export const sms: GeneratorConfig = {
     { key: 'phone', required: true },
     { key: 'message', required: false },
   ],
-  generate: (values) => {
+  generate: (values, type = 'dm') => {
     const phone = normalizePhone(values.phone ?? '')
     const message = values.message?.trim()
     const params = message ? `?body=${encodeURIComponent(message)}` : ''

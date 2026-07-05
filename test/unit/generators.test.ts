@@ -36,6 +36,16 @@ describe('telegram generator', () => {
   it('builds a t.me link, stripping a leading @', () => {
     expect(telegram.generate({ username: '@johndoe', message: 'hey' })).toBe('https://t.me/johndoe?text=hey')
   })
+
+  it('appends ?profile for the profile type', () => {
+    expect(telegram.generate({ username: '@jane' }, 'profile')).toBe('https://t.me/jane?profile')
+  })
+
+  it('builds a share/url link for the post type', () => {
+    expect(telegram.generate({ website: 'example.com', message: 'check this out' }, 'post')).toBe(
+      'https://t.me/share/url?url=https%3A%2F%2Fexample.com&text=check+this+out',
+    )
+  })
 })
 
 describe('sms generator', () => {
@@ -53,7 +63,7 @@ describe('phone generator', () => {
 describe('email generator', () => {
   it('builds a mailto: uri with subject and body', () => {
     expect(email.generate({ email: 'a@b.com', subject: 'Hi', body: 'Hello there' })).toBe(
-      'mailto:a@b.com?subject=Hi&body=Hello+there',
+      'mailto:a@b.com?subject=Hi&body=Hello%20there',
     )
   })
 
@@ -68,14 +78,28 @@ describe('instagram / facebook / linkedin generators', () => {
     expect(facebook.generate({ username: 'jane' })).toBe('https://m.me/jane')
     expect(linkedin.generate({ username: 'jane' })).toBe('https://linkedin.com/in/jane')
   })
+
+  it('builds share links for facebook and linkedin', () => {
+    expect(facebook.generate({ website: 'example.com' }, 'post')).toBe(
+      'https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fexample.com',
+    )
+    expect(linkedin.generate({ website: 'example.com' }, 'post')).toBe(
+      'https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fexample.com',
+    )
+  })
 })
 
 describe('x generator', () => {
   it('builds a tweet intent url with text and via', () => {
     const url = x.generate({ message: 'hello world', username: '@jane' })
-    expect(url).toContain('https://twitter.com/intent/tweet?')
+    expect(url).toContain('https://x.com/intent/tweet?')
     expect(url).toContain('text=hello+world')
     expect(url).toContain('via=jane')
+  })
+
+  it('builds a DM composer url keyed by numeric recipient_id, not username', () => {
+    const url = x.generate({ username: '123456789', message: 'hi' }, 'dm')
+    expect(url).toBe('https://x.com/messages/compose?recipient_id=123456789&text=hi')
   })
 })
 

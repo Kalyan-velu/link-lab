@@ -41,7 +41,6 @@ const brandColorMap: Record<string, { main: string, hover: string, bg: string, t
   phone: { main: '#34C759', hover: '#2ba84a', bg: 'bg-[#34C759]', text: 'text-[#34C759]' },
   email: { main: '#EA4335', hover: '#d13427', bg: 'bg-[#EA4335]', text: 'text-[#EA4335]' },
   snapchat: { main: '#FFFC00', hover: '#e6e300', bg: 'bg-[#FFFC00]', text: 'text-neutral-800' },
-  skype: { main: '#00AFF0', hover: '#009cd6', bg: 'bg-[#00AFF0]', text: 'text-[#00AFF0]' },
   linkedin: { main: '#0A66C2', hover: '#08529c', bg: 'bg-[#0A66C2]', text: 'text-[#0A66C2]' },
   x: { main: '#000000', hover: '#1c1c1c', bg: 'bg-black', text: 'text-black' },
   'google-maps': { main: '#4285F4', hover: '#2a75f3', bg: 'bg-[#4285F4]', text: 'text-[#4285F4]' }
@@ -63,7 +62,7 @@ useHead(() => ({
     }"
   >
     <div 
-      class="absolute top-0 left-1/2 -z-10 h-[500px] w-full max-w-7xl -translate-x-1/2 opacity-[0.07] blur-[120px] pointer-events-none rounded-full transition-all duration-700"
+      class="absolute top-0 left-1/2 -z-10 h-125 w-full max-w-7xl -translate-x-1/2 opacity-[0.07] blur-[120px] pointer-events-none rounded-full transition-all duration-700"
       :class="currentBrand.bg"
     />
 
