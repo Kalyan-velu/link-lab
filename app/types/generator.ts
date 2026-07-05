@@ -19,6 +19,10 @@ export interface GeneratorConfig {
   fields: GeneratorFieldRef[]
   /** Builds the deep link URL from raw (un-normalized) field values. Throws if required fields are missing. */
   generate: (values: FieldValues) => string
+  /** The template syntax of the link, e.g. `https://wa.me/{phone}?text={message}` */
+  formatTemplate?: string
+  /** Details about how the link format works and what protocol it follows. */
+  formatExplanation?: string
 }
 
 export type ValidationErrors = Partial<Record<FieldKey, string>>

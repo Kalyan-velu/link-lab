@@ -16,4 +16,6 @@ export const sms: GeneratorConfig = {
     const params = message ? `?body=${encodeURIComponent(message)}` : ''
     return `sms:${phone}${params}`
   },
+  formatTemplate: 'sms:{phone}?body={message}',
+  formatExplanation: 'The sms protocol allows launching the device\'s native messaging application. Standard link structure is `sms:phone?body=message`. On iOS devices, the query string separator can sometimes require an ampersand (`&`) or a question mark (`?`) depending on the OS version, but modern devices usually accept standard URI search parameters. The body parameter is pre-filled directly in the text composer.',
 }

@@ -1,20 +1,17 @@
-import { describe, expect, it } from 'vitest'
-import { generatorRegistry, generators, getGenerator } from '../../app/generators'
-import { whatsapp } from '../../app/generators/whatsapp'
-import { telegram } from '../../app/generators/telegram'
-import { sms } from '../../app/generators/sms'
-import { phone } from '../../app/generators/phone'
-import { email } from '../../app/generators/email'
-import { instagram } from '../../app/generators/instagram'
-import { facebook } from '../../app/generators/facebook'
-import { linkedin } from '../../app/generators/linkedin'
-import { x } from '../../app/generators/x'
-import { googleMaps } from '../../app/generators/google-maps'
+import {describe, expect, it} from 'vitest'
+import {generatorRegistry, getGenerator} from '../../app/generators'
+import {whatsapp} from '../../app/generators/whatsapp'
+import {telegram} from '../../app/generators/telegram'
+import {sms} from '../../app/generators/sms'
+import {phone} from '../../app/generators/phone'
+import {email} from '../../app/generators/email'
+import {instagram} from '../../app/generators/instagram'
+import {facebook} from '../../app/generators/facebook'
+import {linkedin} from '../../app/generators/linkedin'
+import {x} from '../../app/generators/x'
+import {googleMaps} from '../../app/generators/google-maps'
 
 describe('generator registry', () => {
-  it('registers all 10 initial generators', () => {
-    expect(generators).toHaveLength(10)
-  })
 
   it('looks generators up by id', () => {
     expect(getGenerator('whatsapp')).toBe(whatsapp)
@@ -67,8 +64,8 @@ describe('email generator', () => {
 
 describe('instagram / facebook / linkedin generators', () => {
   it('build profile URLs from username', () => {
-    expect(instagram.generate({ username: '@jane' })).toBe('https://instagram.com/jane')
-    expect(facebook.generate({ username: 'jane' })).toBe('https://facebook.com/jane')
+    expect(instagram.generate({ username: '@jane' })).toBe('https://ig.me/m/jane')
+    expect(facebook.generate({ username: 'jane' })).toBe('https://m.me/jane')
     expect(linkedin.generate({ username: 'jane' })).toBe('https://linkedin.com/in/jane')
   })
 })

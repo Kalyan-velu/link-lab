@@ -9,6 +9,9 @@ import { sms } from './sms'
 import { telegram } from './telegram'
 import { whatsapp } from './whatsapp'
 import { x } from './x'
+import { signal } from './signal'
+import { snapchat } from './snapchat'
+import { skype } from './skype'
 
 /**
  * All available deep link generators. Adding a new platform only requires
@@ -18,11 +21,14 @@ import { x } from './x'
 export const generators: GeneratorConfig[] = [
   whatsapp,
   telegram,
+  signal,
+  facebook,
+  instagram,
   sms,
   phone,
   email,
-  instagram,
-  facebook,
+  snapchat,
+  skype,
   linkedin,
   x,
   googleMaps,

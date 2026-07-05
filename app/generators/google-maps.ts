@@ -25,4 +25,6 @@ export const googleMaps: GeneratorConfig = {
 
     throw new Error('Enter an address or a latitude/longitude pair.')
   },
+  formatTemplate: 'https://www.google.com/maps/search/?api=1&query={query}',
+  formatExplanation: 'Google Maps Search API URL allows deep linking straight to a search result (like coordinates or raw text address). When clicked, this routes directly into the native Google Maps app on mobile or maps.google.com on desktop, centering the map on the queried location.',
 }

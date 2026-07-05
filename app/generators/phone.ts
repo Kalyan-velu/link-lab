@@ -11,4 +11,6 @@ export const phone: GeneratorConfig = {
     const value = normalizePhone(values.phone ?? '')
     return `tel:${value}`
   },
+  formatTemplate: 'tel:{phone}',
+  formatExplanation: 'The tel protocol scheme triggers the device\'s native dialer to place a voice call. It is widely supported across mobile operating systems (iOS and Android) and desktop clients that support cellular calling (like FaceTime on macOS).',
 }
