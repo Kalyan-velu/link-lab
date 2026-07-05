@@ -1,75 +1,80 @@
-# Nuxt Minimal Starter
+# LinkLab
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+LinkLab is a free deep link generator. Pick a platform, fill in a few fields, and get a ready to share link instantly. Everything runs in the browser; nothing is ever sent to a server or saved to storage.
+
+## Supported platforms
+
+- WhatsApp
+- Telegram
+- Signal
+- Facebook
+- Instagram
+- SMS
+- Phone call
+- Email
+- Snapchat
+- Skype
+- LinkedIn
+- X (Twitter)
+- Google Maps
+
+Each platform has its own page at `/generators/<id>` with a unique title, description, and structured data, so the tool can be found directly from search engines.
+
+## Tech stack
+
+- Nuxt 4
+- Vue 3 and TypeScript
+- Tailwind CSS via `@nuxt/ui`
+- Vitest for unit and component tests
+
+## Project structure
+
+- `app/generators/` one config file per platform (fields, validation, and the URL builder)
+- `app/composables/use-generator-state.ts` shared, in memory state for the currently selected generator
+- `app/components/` UI: form, platform selector, QR preview, copy button, page sections
+- `app/pages/` the homepage and the per platform generator pages
+- `server/routes/sitemap.xml.ts` a dynamic sitemap listing every route
+- `test/unit/` and `test/nuxt/` tests for utilities and components
 
 ## Setup
 
-Make sure to install dependencies:
+Install dependencies:
 
 ```bash
-# npm
-npm install
-
-# pnpm
 pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
-## Development Server
+## Development
 
-Start the development server on `http://localhost:3000`:
+Start the dev server at `http://localhost:3000`:
 
 ```bash
-# npm
-npm run dev
-
-# pnpm
 pnpm dev
+```
 
-# yarn
-yarn dev
+## Testing
 
-# bun
-bun run dev
+```bash
+pnpm test         # watch mode, all projects
+pnpm test:unit    # plain TypeScript unit tests
+pnpm test:nuxt    # component tests that need a Nuxt runtime
 ```
 
 ## Production
 
-Build the application for production:
+Build and preview:
 
 ```bash
-# npm
-npm run build
-
-# pnpm
 pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
+pnpm preview
 ```
 
-Locally preview production build:
+Or generate a fully static build:
 
 ```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
+pnpm generate
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Adding a new platform
+
+Create a new file in `app/generators/` that exports a `GeneratorConfig` (id, name, description, icon, fields, and a `generate` function), then list it in `app/generators/index.ts`. No other UI changes are needed; the platform picker, the generator page, and the sitemap all read from that list automatically.
