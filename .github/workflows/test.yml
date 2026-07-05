@@ -11,23 +11,29 @@ env:
   
 jobs:
   test:
-    name: Unit Tests
+    name: Tests
     runs-on: ubuntu-latest
     continue-on-error: false
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: ./.github/actions/setup-node-pnpm
         with:
           node-version: ${{env.NODE_VERSION}}
           pnpm-version: ${{env.PNPM_VERSION}}
       - name: Run Vitest
-        run: | 
+        run: |
             pnpm vitest run \
             --reporter=json \
-            --outputFile=vitest-report/unit.json || true
+            --outputFile=vitest-report/results.json
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: vitest-report
+          path: vitest-report/results.json
       - name: Annotate PR if tests failed
         if: always()
         run: |
-          if jq -e '.numFailedTests > 0' vitest-report/unit.json > /dev/null; then
-            echo "::warning title=Unit Tests Failed::Some unit tests failed. See artifacts."
+          if [ -f vitest-report/results.json ] && jq -e '.numFailedTests > 0' vitest-report/results.json > /dev/null; then
+            echo "::warning title=Tests Failed::Some tests failed. See the vitest-report artifact for details."
           fi
